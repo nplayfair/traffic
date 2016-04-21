@@ -31,5 +31,13 @@ loop do
   state = io.digital_read BUTTON
   if state == 0
     # Button pressed
+    puts 'Button Pressed...'
+    lights.each do |led|
+      io.digital_write led, 1
+    end
+    sleep 1
+    lights.each do |led|
+      io.digital_write led, 0
+    end
   end
 end

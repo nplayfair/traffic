@@ -72,12 +72,14 @@ begin
       sleep 3
 
       # Traffic lights to green, walk light off
-      io.digital_write lights[:walk], 0
-      io.digital_write lights[:red], 0
-      io.digital_write lights[:amber], 0
-      io.digital_write lights[:green], 1
-
-    end # if
+      lights.each do |name, led|
+        if name == :green
+          io.digital_write led, 1
+        else
+          io.digital_write led, 0
+        end
+      end
+    end # button if
   end # loop
 rescue SignalException
   reset_gpio io, lights

@@ -5,6 +5,14 @@ require 'wiringpi'
 
 begin
 
+  ## Functions
+  ## Reset GPIO
+  def reset_gpio (io, lights)
+    lights.each do |name, pin|
+      io.digital_write pin, 0
+    end
+  end
+
   # Setup Pins
   lights = {
     :red    => 0,
@@ -25,6 +33,9 @@ begin
 
   # Set initial state
   state = 0
+  lights.each do |name, led|
+    io.digital_write led, 0
+  end
   io.digital_write lights[:green], 1
 
   # Wait for button to be pressed, then start traffic light routine
@@ -48,7 +59,7 @@ begin
       # Traffic lights to amber
       io.digital_write lights[:green], 0
       io.digital_write lights[:amber], 1
-      sleep 2
+      sleep 3
 
       # Traffic lights to red
       io.digital_write lights[:amber], 0
@@ -71,4 +82,7 @@ begin
 
     end # if
   end # loop
+rescue SignalException
+  reset_gpio io, lights
+  puts "\nClosing program...\n"
 end # program

@@ -44,15 +44,30 @@ begin
 
       # Wait
 
+
       # Traffic lights to amber
+      io.digital_write lights[:green], 0
+      io.digital_write lights[:amber], 1
+      sleep 2
 
       # Traffic lights to red
+      io.digital_write lights[:amber], 0
+      io.digital_write lights[:red], 1
 
       # Walk light on
+      io.digital_write lights[:walk], 1
+      sleep 7
 
       # Flash walk light, traffic lights to red + amber
+      # blink(lights.[:amber])
+      io.digital_write lights[:amber], 1
+      sleep 3
 
-      # Traffic lights to green
+      # Traffic lights to green, walk light off
+      io.digital_write lights[:walk], 0
+      io.digital_write lights[:red], 0
+      io.digital_write lights[:amber], 0
+      io.digital_write lights[:green], 1
 
     end # if
   end # loop

@@ -15,8 +15,14 @@ begin
   end
 
   # Blink
-  def blink (io, led)
+  def blink (io, led, blinks)
     # Blink the LED of the passed in GPIO object
+    blinks.times do
+      io.digital_write led, 1
+      sleep 0.5
+      io.digital_write led, 0
+      sleep 0.5
+    end
   end
 
   # Setup Pins
@@ -44,14 +50,16 @@ begin
   end
   io.digital_write lights[:green], 1
 
+  # TESTS
+  # blink(io, lights[:walk], 3)
+
   # Wait for button to be pressed, then start traffic light routine
   loop do
     state = io.digital_read BUTTON
     if state == 1 # Button pressed
 
       # Wait
-      io.digital_write lights[:walk], 1
-      sleep 3
+      blink io, lights[:walk], 4
 
       # Traffic lights to amber
       io.digital_write lights[:green], 0

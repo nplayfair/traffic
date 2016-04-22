@@ -6,11 +6,17 @@ require 'wiringpi'
 begin
 
   ## Functions
-  ## Reset GPIO
+  
+  # Reset GPIO
   def reset_gpio (io, lights)
     lights.each do |name, pin|
       io.digital_write pin, 0
     end
+  end
+
+  # Blink
+  def blink (io, led)
+    # Blink the LED of the passed in GPIO object
   end
 
   # Setup Pins
@@ -41,20 +47,11 @@ begin
   # Wait for button to be pressed, then start traffic light routine
   loop do
     state = io.digital_read BUTTON
-    if state == 1
-      # Button pressed
-      
-      # puts 'Button Pressed...'
-      # lights.each do |name, led|
-      #   io.digital_write led, 1
-      # end
-      # sleep 1
-      # lights.each do |name, led|
-      #   io.digital_write led, 0
-      # end # do
+    if state == 1 # Button pressed
 
       # Wait
-
+      io.digital_write lights[:walk], 1
+      sleep 3
 
       # Traffic lights to amber
       io.digital_write lights[:green], 0

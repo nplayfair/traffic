@@ -19,25 +19,27 @@ io = WiringPi::GPIO.new
 
 io.pin_mode BUTTON, WiringPi::INPUT
 
-lights.each do |led|
+lights.each do |key, led|
   io.pin_mode led, WiringPi::OUTPUT
 end
 
 # Set initial state
-state = 1
+state = 0
 
 # Wait for button to be pressed, then start traffic light routine
 loop do
   state = io.digital_read BUTTON
-  if state == 0
+  if state == 1
     # Button pressed
     puts 'Button Pressed...'
-    lights.each do |led|
+    lights.each do |name, led|
       io.digital_write led, 1
     end
     sleep 1
-    lights.each do |led|
+    lights.each do |name, led|
       io.digital_write led, 0
     end
   end
+end
+
 end

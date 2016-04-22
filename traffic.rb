@@ -25,20 +25,35 @@ begin
 
   # Set initial state
   state = 0
+  io.digital_write lights[:green], 1
 
   # Wait for button to be pressed, then start traffic light routine
   loop do
     state = io.digital_read BUTTON
     if state == 1
       # Button pressed
-      puts 'Button Pressed...'
-      lights.each do |name, led|
-        io.digital_write led, 1
-      end
-      sleep 1
-      lights.each do |name, led|
-        io.digital_write led, 0
-      end # do
+      
+      # puts 'Button Pressed...'
+      # lights.each do |name, led|
+      #   io.digital_write led, 1
+      # end
+      # sleep 1
+      # lights.each do |name, led|
+      #   io.digital_write led, 0
+      # end # do
+
+      # Wait
+
+      # Traffic lights to amber
+
+      # Traffic lights to red
+
+      # Walk light on
+
+      # Flash walk light, traffic lights to red + amber
+
+      # Traffic lights to green
+
     end # if
   end # loop
 end # program
